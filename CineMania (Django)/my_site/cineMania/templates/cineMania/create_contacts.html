@@ -1,0 +1,23 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} Контактные данные актера {% endblock %}
+
+
+{% block content %}
+    <div class="features" style="width:1000px;">
+        <h1>Заполните контактные данные</h1>
+    </div>
+
+    <form method="post" style="width:500px; margin-left: 250px;">
+        {% csrf_token %}
+        <span>{{ error }}</span><br>
+        {{ form.name }}<br>
+        {{ form.surname }}<br>
+        {{ form.phone }}<br>
+        {{ form.email }}<br>
+
+        <button class= "btn btn-success" type="submit"> Ввод </button>
+        <a href="javascript:history.back()" class="btn btn-warning" type="submit"> Назад </a>
+    </form>
+
+{% endblock %}

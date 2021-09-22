@@ -1,0 +1,54 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %} {{ film.title }} {% endblock %}
+
+{% block href %}
+  href="{% static 'main/css/cinema_home.css' %}"}
+{% endblock %}
+
+{% block style %}
+    .btn-warning{
+        margin: 0 30px 0 0;
+        display: inline-block;
+    }
+    .absolute_center {
+        width: 100%;
+        text-align: center;
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="features" style="width:100%">
+        <h1>{{ film.title }}</h1>
+    </div>
+    <div class="container">
+        <div class="row" style="margin-left: 40px; margin-right: 40px;">
+            <div class="row">
+                <h5>Дата выхода в прокат:</h5>
+                <p>{{ film.date }}</p>
+                <div>
+                    <div>
+                        <h5>В главных ролях:</h5>
+                        <p>{{ film.actors }}</p>
+                        <h5>Актеры студии CineMania:</h5>
+                        <p>
+                            {% for el in film.related_actors.all %}
+                                {{ el.contacts.name }} {{ el.contacts.surname }};
+                            {% endfor %}
+                        </p>
+                    </div>
+                    <div>
+                        <h5>Сюжет фильма:</h5>
+                        <p>{{ film.plot }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute_center">
+                <a href="{% url 'films-update' film.id %}" class="btn btn-warning">Изменить</a>
+                <a href="{% url 'films-delete' film.id %}" class="btn btn-warning">Удалить</a>
+                <a href="{% url 'cinema_home' %}" class="btn btn-warning">Назад</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

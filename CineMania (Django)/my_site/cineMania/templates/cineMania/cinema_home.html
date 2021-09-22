@@ -1,0 +1,42 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %} Кинопроекты {% endblock %}
+
+{% block href %}
+  href="{% static 'main/css/cinema_home.css' %}"}
+{% endblock %}
+
+{% block content %}
+    <div class="features">
+            <h1>Кинопроекты</h1>
+    </div>
+
+    <!--вывод информации о фильмах из БД-->
+    {% if films.all %}
+        {% for el in films %}
+            <div class="container">
+                <div class="row" style="margin-left: 40px; margin-right: 40px;" >
+                    <h3>{{ el.title }}</h3>
+                    <div class="row">
+                        <h5>В главных ролях:</h5>
+                        <p>{{ el.actors }}</p>
+                        <h5>Актеры студии CineMania:</h5>
+                        {% for ell in el.related_actors.all %}
+                            <p>{{ ell.contacts.name }} {{ ell.contacts.surname }};</p>
+                        {% endfor %}
+                        <div>
+                            <h5>Сюжет фильма:</h5>
+                            <p>{{ el.plot }}</p>
+                            <h5>Дата выхода в прокат:</h5>
+                            <p>{{ el.date }}</p>
+                        </div>
+                    </div>
+                    <a href="{% url 'films-detail' el.id %}" class="btn btn-warning">Перейти в редакцию</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>На данный момент, фильмов нет :(</p>
+    {% endif %}
+{% endblock %}

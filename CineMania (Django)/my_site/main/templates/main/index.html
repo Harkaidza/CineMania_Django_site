@@ -1,0 +1,238 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block style %}
+   .point { cursor: pointer; }
+   .back {
+        width:100%;
+        background-color: #111;
+        opacity: 0.9;
+        filter: alpha(Opacity=90);
+   }
+   .button {
+        background-color: #1a4463;
+        -webkit-border-radius: 7px;
+        border-radius: 43px;
+        border: none;
+        color: #e4e2e2;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Arial;
+        font-size: 20px;
+        padding: 5px 9px;
+        text-align: center;
+        text-decoration: none;
+}
+
+    .button:hover, .dropdown-btn:hover {
+        color: #f1f1f1;
+    }
+
+    @keyframes glowing {
+      0% { background-color: #054775; box-shadow: 0 0 2px #074673; }
+      50% { background-color: #1082d4; box-shadow: 0 0 9px #0e87de; }
+      100% { background-color: #074b7b; box-shadow: 0 0 2px #094d7d; }
+    }
+
+    .button {
+      animation: glowing 1500ms infinite;
+    }
+
+    .topnav-right {
+      overflow: hidden;
+      margin-left: 763px;
+      border-radius: 5px;
+      background-color: #222;
+      opacity: 0.9;
+      filter: alpha(Opacity=90);
+    }
+
+    .topnav-right a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .topnav-right a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .topnav-right a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="topnav-right">
+          <a href="register">Регистрация</a>
+          <a href="">Вход</a>
+          <a href=""><i class="fas fa-door-open"></i></a>
+        </div>
+
+        <div class="back">
+            <div class="features">
+                <h1>Вас приветствует киностудия</h1>
+                <h1>CineMania</h1>
+                <p>Хочешь поступить в нашу киностудию?</p>
+                <p>Тогда заполняй анкету и приходи на кастинг!</p>
+                <a class="button" href="">Заполнить анкету</a>
+            </div>
+        </div>
+
+        <div class="column">
+            <img src="{% static 'main/img/photo1.png' %}" class="point" style="width:60%" onclick="openModal();currentSlide(1)" class="hover-shadow">
+        </div>
+
+        <div class="column">
+            <img src="{% static 'main/img/photo2.png' %}" class="point" style="width:60%" onclick="openModal();currentSlide(2)" class="hover-shadow">
+        </div>
+
+        <div class="column">
+            <img src="{% static 'main/img/photo4.png' %}" class="point" style="width:60%" onclick="openModal();currentSlide(3)" class="hover-shadow">
+        </div>
+
+        <div class="column">
+            <img src="{% static 'main/img/photo5.png' %}" class="point" style="width:60%" onclick="openModal();currentSlide(4)" class="hover-shadow">
+        </div>
+
+        <div class="column">
+            <img src="{% static 'main/img/photo6.png' %}" class="point" style="width:60%" onclick="openModal();currentSlide(4)" class="hover-shadow">
+        </div>
+
+        <div class="column">
+            <img src="{% static 'main/img/photo7.png' %}" class="point" style="width:60%" onclick="openModal();currentSlide(4)" class="hover-shadow">
+        </div>
+    </div>
+
+    <!-- The Modal/Lightbox -->
+    <div id="myModal" class="modal">
+      <span class="close cursor" onclick="closeModal()">&times;</span>
+
+      <div class="modal-content">
+        <div class="mySlides">
+          <div class="numbertext">1 / 6</div>
+          <img src="{% static 'main/img/photo1.png' %}" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">2 / 6</div>
+          <img src="{% static 'main/img/photo2.png' %}" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">3 / 6</div>
+          <img src="{% static 'main/img/photo4.png' %}" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">4 / 6</div>
+          <img src="{% static 'main/img/photo5.png' %}" style="width:100%">
+        </div>
+
+
+        <div class="mySlides">
+          <div class="numbertext">5 / 6</div>
+          <img src="{% static 'main/img/photo6.png' %}" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">6 / 6</div>
+          <img src="{% static 'main/img/photo7.png' %}" style="width:100%">
+        </div>
+
+        <!-- Next/previous controls -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <!-- Caption text -->
+        <div class="caption-container">
+          <p id="caption"></p>
+        </div>
+
+        <div class="row">
+            <!-- Thumbnail image controls -->
+            <div class="column">
+              <img class="demo" src="{% static 'main/img/photo1.png' %}" style="width:50%" onclick="currentSlide(1)">
+            </div>
+
+            <div class="column">
+              <img class="demo" src="{% static 'main/img/photo2.png' %}" style="width:50%" onclick="currentSlide(2)">
+            </div>
+
+            <div class="column">
+              <img class="demo" src="{% static 'main/img/photo4.png' %}" style="width:50%" onclick="currentSlide(3)">
+            </div>
+
+            <div class="column">
+              <img class="demo" src="{% static 'main/img/photo5.png' %}" style="width:50%" onclick="currentSlide(4)">
+            </div>
+
+            <div class="column">
+              <img class="demo" src="{% static 'main/img/photo6.png' %}" style="width:50%" onclick="currentSlide(4)">
+            </div>
+
+            <div class="column">
+              <img class="demo" src="{% static 'main/img/photo7.png' %}" style="width:50%" onclick="currentSlide(4)">
+            </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    // Open the Modal
+    function openModal() {
+      document.getElementById('myModal').style.display = "block";
+    }
+
+    // Close the Modal
+    function closeModal() {
+      document.getElementById('myModal').style.display = "none";
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("demo");
+      var captionText = document.getElementById("caption");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+      captionText.innerHTML = dots[slideIndex-1].alt;
+    }
+{% endblock %}
+
+
+
+

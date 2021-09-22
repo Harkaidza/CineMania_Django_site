@@ -1,0 +1,43 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} Добавить актера {% endblock %}
+
+{% block style %}
+    .container {
+        float: left;
+        border-radius: 5px;
+        background-color: white;
+        padding: 10px;
+        max-width: 500px;
+        margin: 0 0 20px 0;
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="features" style="width:1000px;">
+        <h1>Добавить актера</h1>
+    </div>
+
+    <form method="post" style="width:500px; margin-left: 250px;">
+        {% csrf_token %}
+        <span>{{ error }}</span><br>
+        <div class="container">
+            <a href="{% url 'create_contacts' %}"
+                   class="btn btn-warning"
+                   style="width:480px;">Ввести контактные данные нового актера
+            </a><br>
+            <p>Выберите актера из списка:</p>
+            {{ form.contacts }}
+        </div>
+        <div class="container">
+            <p>Выберите фильмы, в которых актер принимал участие:</p>
+            {{ form.film }}
+            <p style="font-size: 12px ">(*)если в списке нет подходящего фильма, то добавьте новый фильм в мастерской</p>
+        </div>
+        {{ form.age }}<br>
+        {{ form.sex }}<br>
+        {{ form.count_films }}<br>
+        <button class= "btn btn-success" type="submit"> Сохранить </button>
+    </form>
+
+{% endblock %}

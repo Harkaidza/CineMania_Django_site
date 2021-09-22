@@ -1,0 +1,18 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} Добавить фильм {% endblock %}
+
+{% block content %}
+    <div class="features" style="width:1000px">
+        <h1>Добавить новый фильм</h1>
+    </div>
+    <form method="post" style="width:500px; margin-left: 250px;">
+        {% csrf_token %}
+        <span>{{ error }}</span><br>
+        {{ form.title }}<br>
+        {{ form.actors }}<br>
+        {{ form.plot }}<br>
+        {{ form.date }}<br>
+        <button class= "btn btn-success" type="submit"> Сохранить </button>
+    </form>
+{% endblock %}

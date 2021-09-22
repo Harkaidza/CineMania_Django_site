@@ -1,0 +1,54 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %} Актеры {% endblock %}
+
+{% block href %}
+  href="{% static 'main/css/actors.css' %}"}
+{% endblock %}
+
+{% block content %}
+
+  <div class="features" style="width:1000px">
+      <h1>Актеры</h1>
+  </div>
+
+  <table class="table_dark" style="margin: auto;">
+      <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Возраст</th>
+        <th>Пол</th>
+        <th>Фильмография</th>
+        <th>Почта</th>
+      </tr>
+
+      {% if actors.all %}
+        {% for el in actors.all %}
+          <tr>
+            <td>{{ el.contacts.name }}</td>
+            <td>{{ el.contacts.surname}}</td>
+            <td>{{ el.age }}</td>
+            <td>{{ el.sex }}</td>
+
+            {% if el.count_films == 1 %}
+              <td>{{ el.count_films }} фильм</td>
+            {% else %}
+              {% if el.count_films < 5 %}
+                <td>{{ el.count_films }} фильма</td>
+              {% else %}
+                <td>{{ el.count_films }} фильмов</td>
+              {% endif %}
+            {% endif %}
+
+            <td>{{ el.contacts.email}}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+            <td colspan="6">К сожалению, на данный момент, актеров еще нет :(</td>
+        </tr>
+      {% endif %}
+  </table>
+
+{% endblock %}

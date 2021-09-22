@@ -1,0 +1,53 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} Удаление фильма {% endblock %}
+
+{% block style %}
+    .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 10px;
+        max-width: 600px;
+        max-height: 150px;
+        margin-top: 20px;
+        display: flex;
+    }
+    .container h5 {
+        color: black;
+        text-align:center;
+    }
+    .absolute_center {
+        width: 100%;
+        text-align: center;
+    }
+    .btn-success{
+        background:red;
+        border-color:red;
+        margin: -60px 0 0 0;
+        display: inline-block;
+    }
+    .btn-warning{
+        margin: -60px 0 0 0;
+        display: inline-block;
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="features" style="width:100%">
+        <h1>Удаление фильма</h1>
+    </div>
+
+    <div class="container">
+        <div class="row" style="margin-left: 40px; margin-right: 40px;">
+            <h5>Вы уверенны, что хотите удалить фильм "{{ film.title }}" ?</h5>
+            <form method="post">
+                {% csrf_token %}
+                <div class="absolute_center">
+                    <button class= "btn btn-success" type="submit"> Удалить </button>
+                    <a href="{% url 'films-detail' film.id %}" class="btn btn-warning">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

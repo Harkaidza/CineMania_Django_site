@@ -1,0 +1,42 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} Вступить в команду {% endblock %}
+
+{% block style %}
+    .container {
+        float: left;
+        border-radius: 5px;
+        background-color: white;
+        padding: 10px;
+        max-width: 500px;
+        margin: 0 0 20px 0;
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="features" style="width:1000px;">
+        <h1>Вступить в команду</h1>
+    </div>
+
+    <form method="post" id="workers" style="width:500px; margin-left: 250px;">
+        {% csrf_token %}
+        <span>{{ error }}</span><br>
+
+        <div class="container">
+            <a href="{% url 'create_contacts' %}"
+                   class="btn btn-warning"
+                   style="width:480px;">Стать новым работником
+            </a><br>
+            <p>Выберите работника из списка:</p>
+            {{ form.contacts }}
+        </div>
+        {{ form.job_position }}<br>
+        {{ form.experience }}<br>
+        {{ form.yearEnd_study }}<br>
+        {{ form.degree }}<br>
+        {{ form.description }}<br>
+
+        <button class= "btn btn-success" type="submit"> Сохранить </button>
+    </form>
+
+{% endblock %}

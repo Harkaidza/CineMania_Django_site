@@ -1,0 +1,94 @@
+{% load static %}
+
+<!doctype html>
+
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no,
+                                   initial-scale=1.0, maximum-scale=1.0,
+                                   minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}"}>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.0/css/all.css"}>
+
+    <link rel="stylesheet" {% block href %} {% endblock %}>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100%;
+            background: #65a6d1 url("{% static 'main/img/auditorium-86197.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+
+    <style>{% block style %}{% endblock %}</style>
+</head>
+
+<body>
+    <div class="row">
+        <div class="column">
+            <div class="sidenav">
+                <img src="{% static 'main/img/Logo2.gif' %}" alt="Логотип" style="margin-left:10px">
+                <h3 style="margin-top:35px; margin-left:40px; background: black; color:white">CineMania</h3>
+
+                <div style="margin-left:5px">
+                    <a href="{% url 'main' %}" style="margin-top:70px"><i class="fas fa-campground"></i> Главная </a>
+                    <a href="{% url 'workers'  %}"><i class="fas fa-chalkboard-teacher"></i> Наша команда </a>
+                    <a href="{% url 'cinema_home'  %}"><i class="fas fa-camera-retro"></i> Кинопроекты </a>
+                    <a href="{% url 'actors'  %}"><i class="fas fa-user-secret"></i> Актеры </a>
+                    <a href="{% url 'contact'  %}"><i class="far fa-compass"></i> Контакты </a>
+                </div>
+
+                <button class="dropdown-btn" style="margin-left:5px" >Мастерская
+                    <i class="fa fa-caret-down"></i>
+                </button>
+
+                <div class="dropdown-container">
+                    <a href="{% url 'create_films' %}"><i class = 'fas fa-plus-circle'></i> Добавить фильм</a>
+                    <a href="{% url 'create_actors' %}"><i class = 'fas fa-plus-circle'></i> Добавить актера</a>
+                    <a href="{% url 'create_workers' %}"><i class = 'fas fa-plus-circle'></i> Вступить в команду</a>
+                </div>
+
+                <script>
+                    var dropdown = document.getElementsByClassName("dropdown-btn");
+                    var i;
+
+                    for (i = 0; i < dropdown.length; i++) {
+                      dropdown[i].addEventListener("click", function() {
+                        this.classList.toggle("active");
+                        var dropdownContent = this.nextElementSibling;
+                        if (dropdownContent.style.display === "block") {
+                          dropdownContent.style.display = "none";
+                        } else {
+                          dropdownContent.style.display = "block";
+                        }
+                      });
+                    }
+                </script>
+            </div>
+        </div>
+
+        <div class="column" style="width:1000px; margin-left:250px; margin-top: 0px">
+            <main>
+                {% block content %}
+                {% endblock %}
+            </main>
+
+            <script>
+                {% block script %}
+                {% endblock %}
+            </script>
+        </div>
+    </div>
+</body>
+</html>

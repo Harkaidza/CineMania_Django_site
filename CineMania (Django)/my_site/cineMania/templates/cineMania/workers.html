@@ -1,0 +1,216 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %} {{ about }} {% endblock %}
+
+{% block style %}
+    .drop-zone {
+      width: 100%;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: "Quicksand", sans-serif;
+      font-weight: 500;
+      font-size: 20px;
+      cursor: pointer;
+      color: #cccccc;
+      border: 1px dashed grey;
+      border-radius: 5px;
+    }
+
+    .drop-zone--over {
+      border-style: solid;
+    }
+
+    .drop-zone__input {
+      display: none;
+    }
+
+    .drop-zone__thumb {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      overflow: hidden;
+      background-color: #cccccc;
+      background-size: cover;
+      position: relative;
+    }
+{% endblock %}
+
+{% block content %}
+     <div class="row">
+
+       <div class="features">
+         <h1>Наша команда</h1>
+       </div>
+
+      <div class="column">
+        <div class="card">
+          <img src="{% static 'main/img/worker1.png' %}" alt="Jane" style="width:100%">
+          <div class="container">
+            <h2>Jane Morgendorfer
+                <i class="fas fa-check"
+                   title="Сотрудник проверен!"
+                   style="font-size: 18px; color: green; cursor: pointer;">
+                </i>
+            </h2>
+            <p class="title">Координатор</p>
+            <p>Jane мастерски ориентируется в любой ситуации.</p>
+            <p>Она именно тот человек, на ком держится вся организация мероприятий.</p>
+            <p>Это невероятно сложная работа, но Jane справляется с ней превосходно.</p>
+            <p>Jane_Morg@gmail.com</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+          <img src="{% static 'main/img/worker2.png' %}" alt="Mike" style="width:100%">
+          <div class="container">
+            <h2>Mike Ross
+                <i class="fas fa-check"
+                   title="Сотрудник проверен!"
+                   style="font-size: 18px; color: green; cursor: pointer;">
+                </i>
+            </h2>
+            <p class="title">Видеооператор</p>
+            <p>Mike владеет искусством постановки кадра.</p>
+            <p>Он всегда находит невероятные локации для для наших фильмов.</p>
+            <p>Mike_Ross@gmail.com</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+          <img src="{% static 'main/img/worker3.png' %}" alt="John" style="width:100%">
+          <div class="container">
+            <h2>John Doe
+                <i class="fas fa-check"
+                   title="Сотрудник проверен!"
+                   style="font-size: 18px; color: green; cursor: pointer;">
+                </i>
+            </h2>
+            <p class="title">Дизайнер</p>
+            <p>Благодаря John Doe в наших фильмах самые реалистичные декорации.</p>
+            <p>John_Doe@gmail.com</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+          <img src="{% static 'main/img/worker5.png' %}" alt="Sam" style="width:100%">
+          <div class="container">
+            <h2>Samuel Jainson
+                <i class="fas fa-check"
+                   title="Сотрудник проверен!"
+                   style="font-size: 18px; color: green; cursor: pointer;">
+                </i>
+            </h2>
+            <p class="title">Режиссер</p>
+            <p>Один из лучших режиссеров Франции.</p>
+            <p>Совместно с киностудией срежессировал около 20 фильмов.</p>
+            <p>Samuel_Jainson@gmail.com</p>
+          </div>
+        </div>
+      </div>
+
+      {% if workers.all %}
+        {% for el in workers.all %}
+          <div class="column">
+            <div class="card">
+
+              <title>Drag and Drop File Upload</title>
+
+              <div class="drop-zone" >
+                    <span class="drop-zone__prompt">Нажмите, чтобы загрузить фото</span>
+                    <input type="file" name="myFile" class="drop-zone__input">
+              </div>
+
+              <div class="container" style="width: 330px">
+                  <h2>{{ el.contacts.name }} {{ el.contacts.surname }}
+                      <i class="fa fa-exclamation-circle"
+                         title="Сотрудник проверяется службой безопасности!"
+                         style="font-size: 18px; color: red; cursor: pointer;">
+                      </i>
+                  </h2>
+                  <p class="title">{{ el.job_position }}</p>
+                  <p>{{ el.description }}</p>
+                  <p>{{ el.contacts.email }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+     </div>
+
+    <script>
+        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+          const dropZoneElement = inputElement.closest(".drop-zone");
+
+          dropZoneElement.addEventListener("click", (e) => {
+            inputElement.click();
+          });
+
+          inputElement.addEventListener("change", (e) => {
+            if (inputElement.files.length) {
+              updateThumbnail(dropZoneElement, inputElement.files[0]);
+            }
+          });
+
+          dropZoneElement.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropZoneElement.classList.add("drop-zone--over");
+          });
+
+          ["dragleave", "dragend"].forEach((type) => {
+            dropZoneElement.addEventListener(type, (e) => {
+              dropZoneElement.classList.remove("drop-zone--over");
+            });
+          });
+
+          dropZoneElement.addEventListener("drop", (e) => {
+            e.preventDefault();
+
+            if (e.dataTransfer.files.length) {
+              inputElement.files = e.dataTransfer.files;
+              updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+            }
+
+            dropZoneElement.classList.remove("drop-zone--over");
+          });
+        });
+
+        function updateThumbnail(dropZoneElement, file) {
+          let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+          // First time - remove the prompt
+          if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+            dropZoneElement.querySelector(".drop-zone__prompt").remove();
+          }
+
+          // First time - there is no thumbnail element, so lets create it
+          if (!thumbnailElement) {
+            thumbnailElement = document.createElement("div");
+            thumbnailElement.classList.add("drop-zone__thumb");
+            dropZoneElement.appendChild(thumbnailElement);
+          }
+
+          // Show thumbnail for image files
+          if (file.type.startsWith("image/")) {
+            const reader = new FileReader();
+
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+              thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+            };
+          } else {
+            thumbnailElement.style.backgroundImage = null;
+          }
+        }
+    </script>
+
+{% endblock %}
